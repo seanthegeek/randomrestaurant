@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "randomrestaurant.py -wt 'Mason, OH'",
+            "type": "python",
+            "request": "launch",
+            "program": "randomrestaurant.py",
+            "args": ["-wt", "Mason, OH"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+    ]
+}

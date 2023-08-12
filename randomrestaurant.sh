@@ -12,10 +12,10 @@ if [ ! -d ".venv" ]; then
         # macOS
         export PIP_CERT=/etc/ssl/cert.pem
     fi
-    virtualenv .venv || exit
+    python3 -m venv .venv || exit
     . .venv/bin/activate
     pip install -U pip
     pip install -U -r requirements.txt
 fi
 
-.venv/bin/python3 randomrestaurant.py "$@"
+.venv/bin/python randomrestaurant.py "$@"
