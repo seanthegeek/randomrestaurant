@@ -61,7 +61,7 @@ key.
    Windows command line, or `randomrestaurant.ps1` in Powershell on Windows
 
 This wrapper script will automatically create a new Python
-[virtual environment][venv] if needed, install any needed dependencies. It
+[virtual environment][venv] if needed and install any dependencies. It
 will also execute `randomrestaurant.py` for you in the context of the virtual
 environment and pass all arguments to it.
 
