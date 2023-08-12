@@ -8,23 +8,23 @@ usage: randomrestaurant.py [-h] [--version] [--debug] [--config CONFIG] [--radiu
 Returns random restaurants or other locations from Google Maps
 
 positional arguments:
-  location              The geographic location to search
+  location              the geographic location to search
 
 options:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
-  --debug               Print exception stacktraces (default: False)
+  --debug               print exception stacktraces (default: False)
   --config CONFIG, -c CONFIG
-                        The path to the configuration file (default: config.json)
+                        the path to the configuration file (default: config.json)
   --radius RADIUS, -r RADIUS
-                        The radius of the search area in meters (default: 8046)
-  -n N                  The maximum number of results to return (default: 1)
+                        the radius of the search area in meters (default: 8046)
+  -n N                  the maximum number of results to return (default: 1)
   --keyword KEYWORD, -k KEYWORD
-                        The keyword to search for (Use quotes around multiple keywords) (default: Restaurant)
-  --delivery, -d        Only return locations that offer delivery (default: False)
-  --takeout, -t         Only return locations that offer takeout (default: False)
-  --wheelchair, -w      Only return locations that have a wheelchair-accessible entrance (default: False)
-  --json, -j            Output in JSON format (default: False)
+                        the keyword to search for (use quotes around multiple keywords) (default: Restaurant)
+  --delivery, -d        only return locations that offer delivery (default: False)
+  --takeout, -t         only return locations that offer takeout (default: False)
+  --wheelchair, -w      only return locations that have a wheelchair-accessible entrance (default: False)
+  --json, -j            output in JSON format (default: False)
 ```
 
 ## Setup

@@ -62,29 +62,29 @@ def get_place_details(gmaps: googlemaps.Client, place_id: str) -> dict:
 def _main():
     args = ArgumentParser(description=__doc__,
                           formatter_class=ArgumentDefaultsHelpFormatter)
-    args.add_argument("location", help="The geographic location to search")
+    args.add_argument("location", help="the geographic location to search")
     args.add_argument("--version", action="version", version=__version__)
     args.add_argument("--debug", action="store_true",
-                      help="Print exception stacktraces")
+                      help="print exception stacktraces")
     args.add_argument("--config", "-c", default="config.json",
-                      help="The path to the configuration file")
+                      help="the path to the configuration file")
     args.add_argument("--radius", "-r", type=int,
-                      help="The radius of the search area in meters",
+                      help="the radius of the search area in meters",
                         default=8046)
     args.add_argument("-n", type=int, default=1,
-                      help="The maximum number of results to return")
+                      help="the maximum number of results to return")
     args.add_argument("--keyword", "-k", default="Restaurant",
-                      help="The keyword to search for "
-                      "(Use quotes around multiple keywords)")
+                      help="the keyword to search for "
+                      "(use quotes around multiple keywords)")
     args.add_argument("--delivery", "-d", action="store_true",
-                      help="Only return locations that offer delivery")
+                      help="only return locations that offer delivery")
     args.add_argument("--takeout", "-t", action="store_true",
-                      help="Only return locations that offer takeout")
+                      help="only return locations that offer takeout")
     args.add_argument("--wheelchair", "-w", action="store_true",
-                      help="Only return locations that have a " 
+                      help="only return locations that have a " 
                       "wheelchair-accessible entrance")
     args.add_argument("--json", "-j", action="store_true",
-                      help="Output in JSON format")
+                      help="output in JSON format")
     args = args.parse_args()
 
     try:
