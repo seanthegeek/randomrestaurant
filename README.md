@@ -60,11 +60,10 @@ key.
 3. Use `./randomrestaurant.sh`in Linux or macOS, `randomrestaurant.bat` on the
    Windows command line, or `randomrestaurant.ps1` in Powershell on Windows
 
-This wrapper script will automatically create a new
-context of the new virtual environment and pas all arguments to it.
-Python [virtual environment][venv] if needed, install any needed
-dependencies. It will also execute `randomrestaurant.py` for you in the
-context of the new virtual environment and pas all arguments to it.
+This wrapper script will automatically create a new Python
+[virtual environment][venv] if needed, install any needed dependencies. It
+will also execute `randomrestaurant.py` for you in the context of the virtual
+environment and pass all arguments to it.
 
 [git-windows]: https://git-scm.com/download/win
 [homebrew]: https://brew.sh/
