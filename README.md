@@ -1,8 +1,8 @@
 # randomrestaurant
 
 ```text
-usage: randomrestaurant.py [-h] [--version] [--debug] [--config CONFIG] [--radius RADIUS] [-n N]
-                           [--keyword KEYWORD] [--delivery] [--takeout] [--wheelchair] [--json]
+usage: randomrestaurant.py [-h] [--version] [--debug] [--config CONFIG] [--radius RADIUS] [-n N] [--keyword KEYWORD]
+                           [--delivery] [--takeout] [--wheelchair] [--json]
                            location
 
 Returns random restaurants or other locations from Google Maps
@@ -13,18 +13,18 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
-  --debug               Print exception stacktraces
+  --debug               Print exception stacktraces (default: False)
   --config CONFIG, -c CONFIG
-                        The path to the configuration file
+                        The path to the configuration file (default: config.json)
   --radius RADIUS, -r RADIUS
-                        The radius of the search area in meters
-  -n N                  The maximum number of results to return
+                        The radius of the search area in meters (default: 8046)
+  -n N                  The maximum number of results to return (default: 1)
   --keyword KEYWORD, -k KEYWORD
-                        The keyword to search for (Use quotes around multiple keywords)
-  --delivery, -d        Only return locations that offer delivery
-  --takeout, -t         Only return locations that offer takeout
-  --wheelchair, -w      Only return locations that have a wheelchair-accessible entrance
-  --json, -j            Output in JSON format
+                        The keyword to search for (Use quotes around multiple keywords) (default: Restaurant)
+  --delivery, -d        Only return locations that offer delivery (default: False)
+  --takeout, -t         Only return locations that offer takeout (default: False)
+  --wheelchair, -w      Only return locations that have a wheelchair-accessible entrance (default: False)
+  --json, -j            Output in JSON format (default: False)
 ```
 
 ## Setup
