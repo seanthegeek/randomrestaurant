@@ -44,7 +44,7 @@ def _bool_filter(items: list[dict], key: str) -> list:
     :return: A filtered list of dictionaries
     """
     def _check_value(x: dict):
-        if key not in x.keys():
+        if key not in x:
             return False
         return x[key] is True
     filtered_items = items.copy()
