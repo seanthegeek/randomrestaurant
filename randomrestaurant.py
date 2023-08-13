@@ -13,30 +13,57 @@ import googlemaps
 import googlemaps.geocoding
 import googlemaps.places
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 
 def _get_random_items(items: list, number: int = None) -> list:
+    """
+    Get random items from a list of items
+
+    :param items: A list of items
+    :param number: The number of items to return
+    :return: A list of random items
+    """
     if number is not None:
         if number > len(items):
             number = len(items)
-        _items = items.copy()
-        shuffle(_items)
+    _items = items.copy()
+    shuffle(_items)
+
     return _items[:number]
 
+
 def _bool_filter(items: list[dict], key: str) -> list:
+    """
+    Filter a list of dictionaries based on boolean values.
+    dictionaries that do not contain a matching key
+    with a value of True are filtered out.
+
+    :param items: A list of dictionaries
+    :param key: The dictionary key containing a boolean value
+    :return: A filtered list of dictionaries
+    """
     def _check_value(x: dict):
         if key not in x.keys():
             return False
         return x[key] is True
     filtered_items = items.copy()
-    filtered_items = filter(_check_value, items)
+    filtered_items = filter(_check_value, filtered_items)
 
     return list(filtered_items)
 
 
-def get_places(gmaps: googlemaps.Client,
-               keyword: str, near: str, radius=8046) -> list[dict]:
+def find_open_places(gmaps: googlemaps.Client,
+                     keyword: str, near: str, radius=8046) -> list[dict]:
+    """
+    Find open places on Google Maps
+
+    :param gmaps: A Google Maps Platform client
+    :param keyword: Search terms
+    :param near: A location (e.g., city or address)
+    :param radius: A radius in meters
+    :return: A list of places
+    """
     location = googlemaps.geocoding.geocode(gmaps, address=near)
     location = location[0]["geometry"]["location"]
     response = googlemaps.places.places_nearby(gmaps,
@@ -56,6 +83,13 @@ def get_places(gmaps: googlemaps.Client,
 
 
 def get_place_details(gmaps: googlemaps.Client, place_id: str) -> dict:
+    """
+    Get details of a place on Google Maps
+
+    :param gmaps: A Google Maps Platform client
+    :param place_id: A Google Maps Place ID
+    :return: Place details
+    """
     return googlemaps.places.place(gmaps, place_id=place_id)["result"]
 
 
@@ -92,8 +126,8 @@ def _main():
             config = json.loads(config_file.read())
         key = config["key"]
         gmaps = googlemaps.Client(key=key)
-        places = get_places(gmaps, args.keyword, args.location,
-                            radius=args.radius)
+        places = find_open_places(gmaps, args.keyword, args.location,
+                                  radius=args.radius)
         for i in range(len(places)):
             places[i] = get_place_details(gmaps, places[i]["place_id"])
         if args.delivery:
