@@ -141,8 +141,8 @@ def _main():
             print(json.dumps(random_places, indent=2))
             exit()
         for place in random_places:
-            print(f'{place["name"]}\n'
-                  f'{place["formatted_address"]}')
+            print(f'{place["name"]}')
+            print(f'{place["formatted_address"]}')
             if "formatted_phone_number" in place:
                 print(f'{place["formatted_phone_number"]}')
             print(f'{place["url"]}')
