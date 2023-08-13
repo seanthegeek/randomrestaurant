@@ -104,7 +104,7 @@ def _main():
                       help="the path to the configuration file")
     args.add_argument("--radius", "-r", type=int,
                       help="the radius of the search area in meters",
-                        default=8046)
+                      default=8046)
     args.add_argument("-n", type=int, default=1,
                       help="the maximum number of results to return")
     args.add_argument("--keyword", "-k", default="Restaurant",
