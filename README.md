@@ -44,14 +44,8 @@ access to the following APIs:
 - Geolocation API
 - Places API
 
-Create a file named `config.json` and set the `key` value to the generated API
-key.
-
-```json
-{
-    "key": ""
-}
-```
+Rename the file `config.example.json` to `config.json` and set the `key` value
+inside the file to the generated API key.
 
 ## Use
 
