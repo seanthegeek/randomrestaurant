@@ -1,8 +1,11 @@
 # Changelog
 
-## 1.2.0
+## 1.2.1
 
 - Reduce API calls by only getting Place details when necessary
+
+## 1.2.0
+
 - The `near` argument of `find_open_places` function now also accepts locations as lat/long tuples or dictionaries
 - Add `get_random_open_places` function
 

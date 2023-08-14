@@ -14,7 +14,7 @@ import googlemaps
 import googlemaps.geocoding
 import googlemaps.places
 
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 
 
 def _get_random_items(items: list, number: int = None) -> list:
@@ -137,8 +137,13 @@ def get_random_open_places(gmaps: googlemaps.Client,
     :return: A list of places
     """
     places = find_open_places(gmaps, keyword, near,
-                              radius=radius, filters=filters, details=details)
-    return _get_random_items(places, max_results)
+                              radius=radius, filters=filters)
+    random_places = _get_random_items(places, max_results)
+    if details:
+        for i in range(len(random_places)):
+            random_places[i] = get_place_details(gmaps, random_places[i])
+
+    return random_places
 
 
 def _main():
