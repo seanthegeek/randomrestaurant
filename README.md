@@ -65,7 +65,7 @@ To pull the latest updates:
 
 1. Open a terminal
 2. `cd` to the directory where this repository was cloned
-3. run `git pull`
+3. Run `git pull`
 
 [git-windows]: https://git-scm.com/download/win
 [homebrew]: https://brew.sh/
