@@ -5,6 +5,7 @@
 import json
 import sys
 import traceback
+from typing import Union
 from time import sleep
 from random import shuffle
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
@@ -13,7 +14,7 @@ import googlemaps
 import googlemaps.geocoding
 import googlemaps.places
 
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 
 
 def _get_random_items(items: list, number: int = None) -> list:
@@ -54,18 +55,29 @@ def _bool_filter(items: list[dict], key: str) -> list:
 
 
 def find_open_places(gmaps: googlemaps.Client,
-                     keyword: str, near: str, radius=8046) -> list[dict]:
+                     keyword: str, near: Union[str, tuple, dict], radius=8046,
+                     details: bool = False,
+                     filters: list[str] = None) -> list[dict]:
     """
-    Find open places on Google Maps
+    Find open Places on Google Maps
 
     :param gmaps: A Google Maps Platform client
     :param keyword: Search terms
-    :param near: A location (e.g., city or address)
+    :param near: A location (e.g., city or address) or a (lat,lng) tuple/dict
     :param radius: A radius in meters
+    :param details: Include place details
+    :param filters: A list of boolean keys to filter by
     :return: A list of places
     """
-    location = googlemaps.geocoding.geocode(gmaps, address=near)
-    location = location[0]["geometry"]["location"]
+    if filters is None:
+        filters = []
+    if type(near) is str:
+        location = googlemaps.geocoding.geocode(gmaps, address=near)
+        location = location[0]["geometry"]["location"]
+    elif type(near) is tuple or type(near) is list:
+        location = dict(lat=float(near[0]), lng=float(near[1]))
+    else:
+        location = near
     response = googlemaps.places.places_nearby(gmaps,
                                                keyword=keyword,
                                                open_now=True,
@@ -78,26 +90,64 @@ def find_open_places(gmaps: googlemaps.Client,
             gmaps,
             page_token=response["next_page_token"])
         results += response["results"]
+        if len(filters) or details:
+            for i in range(len(results)):
+                results[i] = get_place_details(gmaps, results[i]["place_id"])
+        if len(filters):
+            for key in filters:
+                results = _bool_filter(results, key)
 
     return results
 
 
-def get_place_details(gmaps: googlemaps.Client, place_id: str) -> dict:
+def get_place_details(gmaps: googlemaps.Client,
+                      place: Union[str, dict]) -> dict:
     """
-    Get details of a place on Google Maps
+    Get details of a Place on Google Maps
 
     :param gmaps: A Google Maps Platform client
-    :param place_id: A Google Maps Place ID
+    :param place: A Google Maps Place ID or dictionary
     :return: Place details
     """
-    return googlemaps.places.place(gmaps, place_id=place_id)["result"]
+    if type(place) is str:
+        return googlemaps.places.place(gmaps,
+                                       place_id=place)["result"]
+    elif "formatted_address" in place:
+        return place
+    return googlemaps.places.place(gmaps,
+                                   place_id=place["place_id"])["result"]
+
+
+def get_random_open_places(gmaps: googlemaps.Client,
+                           keyword: str, near: Union[str, tuple, dict],
+                           radius=8046,
+                           details: bool = False,
+                           filters: list[str] = None,
+                           max_results: int = None) -> list[dict]:
+    """
+    Find random open Places on Google Maps
+
+    :param gmaps: A Google Maps Platform client
+    :param keyword: Search terms
+    :param near: A location (e.g., city or address) or a (lat,lng) tuple/dict
+    :param radius: A radius in meters
+    :param details: Include place details
+    :param filters: A list of boolean keys to filter by
+    :param max_results: The maximum number of results to return
+    :return: A list of places
+    """
+    places = find_open_places(gmaps, keyword, near,
+                              radius=radius, filters=filters, details=details)
+    return _get_random_items(places, max_results)
 
 
 def _main():
     args = ArgumentParser(description=__doc__,
                           formatter_class=ArgumentDefaultsHelpFormatter)
-    args.add_argument("location", help="the geographic location to search")
-    args.add_argument("--version", action="version", version=__version__)
+    args.add_argument("location",
+                      help="the geographic location to search")
+    args.add_argument("--version",
+                      action="version", version=__version__)
     args.add_argument("--debug", action="store_true",
                       help="print exception stacktraces")
     args.add_argument("--config", "-c", default="config.json",
@@ -121,22 +171,26 @@ def _main():
                       help="output in JSON format")
     args = args.parse_args()
 
+    filters = []
+
     try:
         with open(args.config) as config_file:
             config = json.loads(config_file.read())
         key = config["key"]
         gmaps = googlemaps.Client(key=key)
-        places = find_open_places(gmaps, args.keyword, args.location,
-                                  radius=args.radius)
-        for i in range(len(places)):
-            places[i] = get_place_details(gmaps, places[i]["place_id"])
         if args.delivery:
-            places = _bool_filter(places, "delivery")
+            filters.append("delivery")
         if args.takeout:
-            places = _bool_filter(places, "takeout")
+            filters.append("takeout")
         if args.wheelchair:
-            places = _bool_filter(places, "wheelchair_accessible_entrance")
-        random_places = _get_random_items(places, args.n)
+            filters.append("wheelchair_accessible entrance")
+        random_places = get_random_open_places(gmaps,
+                                               keyword=args.keyword,
+                                               near=args.location,
+                                               radius=args.radius,
+                                               details=True,
+                                               filters=filters,
+                                               max_results=args.n)
         if args.json:
             print(json.dumps(random_places, indent=2))
             exit()
