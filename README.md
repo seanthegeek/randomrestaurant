@@ -59,6 +59,14 @@ This wrapper script will automatically create a new Python
 will also execute `randomrestaurant.py` for you in the context of the virtual
 environment and pass all arguments to it.
 
+## Updates
+
+To pull the latest updates:
+
+1. Open a terminal
+2. `cd` to the directory where this repository was cloned
+3. run `git pull`
+
 [git-windows]: https://git-scm.com/download/win
 [homebrew]: https://brew.sh/
 [GMP]: https://developers.google.com/maps/get-started/
