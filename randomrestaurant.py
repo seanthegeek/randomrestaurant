@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Returns random restaurants or other locations from Google Maps"""
+"""Returns random open restaurants or other locations from Google Maps"""
 
 import json
 import sys

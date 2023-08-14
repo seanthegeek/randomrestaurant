@@ -5,7 +5,7 @@ usage: randomrestaurant.py [-h] [--version] [--debug] [--config CONFIG] [--radiu
                            [--delivery] [--takeout] [--wheelchair] [--json]
                            location
 
-Returns random restaurants or other locations from Google Maps
+Returns random open restaurants or other locations from Google Maps
 
 positional arguments:
   location              the geographic location to search
