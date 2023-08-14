@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- Fix wheelchair accessible entrance filter
+
 ## 1.2.1
 
 - Reduce API calls by only getting Place details when necessary

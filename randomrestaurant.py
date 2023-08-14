@@ -14,7 +14,7 @@ import googlemaps
 import googlemaps.geocoding
 import googlemaps.places
 
-__version__ = "1.2.1"
+__version__ = "1.2.2"
 
 
 def _get_random_items(items: list, number: int = None) -> list:
@@ -188,7 +188,7 @@ def _main():
         if args.takeout:
             filters.append("takeout")
         if args.wheelchair:
-            filters.append("wheelchair_accessible entrance")
+            filters.append("wheelchair_accessible_entrance")
         random_places = get_random_open_places(gmaps,
                                                keyword=args.keyword,
                                                near=args.location,
